@@ -95,28 +95,26 @@ Quick gut:
 **Draft workflow Card #1** (ASCII / Mermaid / ảnh đính kèm):
 
 ```mermaid
-flowchart TB
-    subgraph Current["🔴 CURRENT STATE — Quy trình thủ công (~25 phút)"]
-        direction LR
-        C1["1. Phát hiện vết xước<br>⏱ 2'"] --> C2["2. Tra kho ảnh cũ<br>⏱ 3'"]
-        C2 --> C3["🔴 3. Soi mắt đối chiếu từng ảnh<br><b>BOTTLENECK</b><br>⏱ 15'"]
-        C3 --> C4["4. Tranh cãi & chốt<br>⏱ 3'"]
-        C4 --> C5["5. Lập biên bản<br>⏱ 2'"]
+flowchart TD
+    subgraph Current_State ["CURRENT STATE - Quy trình thủ công (25 phút)"]
+        C1["1. Phát hiện vết xước (2 phút)"] --> C2["2. Tra cứu kho ảnh cũ trên hệ thống (3 phút)"]
+        C2 --> C3["3. Soi mắt đối chiếu từng ảnh (BOTTLENECK - 15 phút)"]
+        C3 --> C4["4. Tranh cãi và chốt trách nhiệm (3 phút)"]
+        C4 --> C5["5. Lập biên bản đền bù (2 phút)"]
     end
 
-    subgraph Future["🚀 FUTURE STATE — Có AI hỗ trợ (~4 phút)"]
-        direction LR
-        F1["1. Chụp ảnh góc xước mới<br>⏱ 1'"] --> F2["🔵 2. AI Image Differencing<br>⏱ 30s"]
-        F2 --> F3{"AI Confidence<br>≥ 80%?"}
-        F3 -- "Đạt" --> F4["🟢 3. KTV review & chốt kết quả<br><b>HUMAN-IN-THE-LOOP</b><br>⏱ 2'"]
-        F4 --> F5["4. Ký biên bản điện tử<br>⏱ 30s"]
-        F3 -- "Nghi ngờ" --> F6["🟡 Fallback: Soi thủ công kho ảnh<br>⏱ 10'"]
+    subgraph Future_State ["FUTURE STATE - Có AI hỗ trợ (4 phút)"]
+        F1["1. Chụp ảnh góc xước mới trên app (1 phút)"] --> F2["2. AI Image Differencing tự động so sánh (30 giây)"]
+        F2 --> F3{"Độ tự tin của AI >= 80%?"}
+        F3 -- "Đạt chuẩn" --> F4["3. KTV review và chốt kết quả (HUMAN REVIEW - 2 phút)"]
+        F4 --> F5["4. Ký biên bản điện tử (30 giây)"]
+        F3 -- "Nghi ngờ" --> F6["Fallback: Soi thủ công kho ảnh như cũ (10 phút)"]
     end
 
-    style C3 fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#c62828
-    style F2 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#1565c0
-    style F4 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#2e7d32
-    style F6 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px,stroke-dasharray: 4 4,color:#f57f17
+    style C3 fill:#FFEAEA,stroke:#D32F2F,color:#111
+    style F2 fill:#E8F1FF,stroke:#2F6FED,color:#111
+    style F4 fill:#EAF7EA,stroke:#388E3C,color:#111
+    style F6 fill:#FFF8E1,stroke:#FFA000,color:#111
 ```
 
 > **Fallback:** Nếu ảnh mờ/lóa hoặc độ tự tin của AI < 80%, hệ thống tự động gắn cờ "Manual Review" và chuyển sang quy trình KTV tra cứu kho ảnh thủ công như cũ.
@@ -162,28 +160,26 @@ Quick gut:
 **Draft workflow Card #2:**
 
 ```mermaid
-flowchart TB
-    subgraph Current["🔴 CURRENT STATE — Quy trình thủ công (~5.5 phút)"]
-        direction LR
-        C1["1. Kiểm tra quanh xe<br>⏱ 1'"] --> C2["2. Mở app vào form DVIR<br>⏱ 30s"]
-        C2 --> C3["🔴 3. Bấm tick từng ô & gõ text lỗi<br><b>BOTTLENECK</b><br>⏱ 3'"]
-        C3 --> C4["4. Chụp ảnh taplo<br>⏱ 30s"]
-        C4 --> C5["5. Ký tên & submit<br>⏱ 30s"]
+flowchart TD
+    subgraph Current_State ["CURRENT STATE - Quy trình thủ công (5.5 phút)"]
+        C1["1. Kiểm tra an toàn quanh xe (1 phút)"] --> C2["2. Mở app vào form DVIR (30 giây)"]
+        C2 --> C3["3. Bấm tick từng ô và gõ text lỗi (BOTTLENECK - 3 phút)"]
+        C3 --> C4["4. Chụp ảnh taplo và ngoại quan (30 giây)"]
+        C4 --> C5["5. Ký tên và submit báo cáo (30 giây)"]
     end
 
-    subgraph Future["🚀 FUTURE STATE — Voice-to-Form AI (~1.5 phút)"]
-        direction LR
-        F1["1. Vừa check xe vừa nói khẩu lệnh<br>⏱ 1'"] --> F2["🔵 2. AI STT & Entity Extraction<br>⏱ 5s"]
-        F2 --> F3{"Nhận diện<br>rõ ràng?"}
-        F3 -- "Thành công" --> F4["🟢 3. Tài xế xác nhận 1 chạm<br><b>HUMAN-IN-THE-LOOP</b><br>⏱ 25s"]
-        F4 --> F5["4. Chụp taplo & Submit tức thì<br>⏱ 10s"]
-        F3 -- "Nhiễu / Quá ồn" --> F6["🟡 Fallback: Mở form bấm tay cũ"]
+    subgraph Future_State ["FUTURE STATE - Voice-to-Form AI (1.5 phút)"]
+        F1["1. Vừa kiểm tra xe vừa nói khẩu lệnh (1 phút)"] --> F2["2. AI STT và LLM trích xuất thực thể (5 giây)"]
+        F2 --> F3{"AI nhận diện rõ ràng?"}
+        F3 -- "Thành công" --> F4["3. Tài xế xác nhận 1 chạm (HUMAN REVIEW - 25 giây)"]
+        F4 --> F5["4. Chụp taplo và submit tức thì (10 giây)"]
+        F3 -- "Quá ồn / Nhiễu" --> F6["Fallback: Mở lại form checklist bấm tay truyền thống"]
     end
 
-    style C3 fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#c62828
-    style F2 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#1565c0
-    style F4 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#2e7d32
-    style F6 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px,stroke-dasharray: 4 4,color:#f57f17
+    style C3 fill:#FFEAEA,stroke:#D32F2F,color:#111
+    style F2 fill:#E8F1FF,stroke:#2F6FED,color:#111
+    style F4 fill:#EAF7EA,stroke:#388E3C,color:#111
+    style F6 fill:#FFF8E1,stroke:#FFA000,color:#111
 ```
 
 > **Fallback:** Nếu môi trường quá ồn hoặc AI không nhận diện được giọng nói, app tự động mở lại giao diện form checklist bấm tay truyền thống.
@@ -229,30 +225,28 @@ Quick gut:
 **Draft workflow Card #3:**
 
 ```mermaid
-flowchart TB
-    subgraph Current["🔴 CURRENT STATE — Quy trình thủ công (~60 phút)"]
-        direction LR
-        C1["1. Ca trước trả xe cạn pin<br><i>(Pin < 20%)</i><br>⏱ 2'"] --> C2["2. Ký nhận xe bàn giao<br>⏱ 3'"]
-        C2 --> C3["3. Lái xe đi tìm trụ sạc<br>⏱ 10'"]
-        C3 --> C4["🔴 4. Ngồi chờ cắm sạc pin<br><b>BOTTLENECK</b><br>⏱ 45'"]
-        C4 --> C5["5. Bật app đón khách<br><i>(Pin ≥ 70%)</i><br>⏱ 1'"]
+flowchart TD
+    subgraph Current_State ["CURRENT STATE - Quy trình thủ công (60 phút)"]
+        C1["1. Ca trước trả xe cạn pin dưới 20% (2 phút)"] --> C2["2. Ký nhận bàn giao xe (3 phút)"]
+        C2 --> C3["3. Lái xe đi tìm trụ sạc còn trống (10 phút)"]
+        C3 --> C4["4. Ngồi chờ cắm sạc pin (BOTTLENECK - 45 phút)"]
+        C4 --> C5["5. Bật app đón khách khi pin >= 70% (1 phút)"]
     end
 
-    subgraph Future["🚀 FUTURE STATE — Smart Dispatching Agent (~5 phút)"]
-        direction LR
-        F1["1. Trước giao ca 45': AI giám sát pin"] --> F2["🔵 2. AI Destination Dispatch<br><i>(Gán cuốc tiện đường về trạm)</i>"]
-        F2 --> F3{"Về bãi đạt<br>pin ≥ 70%?"}
-        F3 -- "Đủ pin" --> F4["🟢 3. Bàn giao & nhận xe ngay<br><b>HUMAN ACTION</b><br>⏱ 3'"]
-        F4 --> F5["4. Bật app đón khách ngay<br>⏱ 2'"]
-        F3 -- "Pin < 30%" --> F6["🟡 Fallback: Dynamic Swapping<br><i>(Cấp xe đã sạc sẵn từ bãi bảo dưỡng)</i><br>⏱ 3'"]
+    subgraph Future_State ["FUTURE STATE - Smart Dispatching Agent (5 phút)"]
+        F1["1. Trước giao ca 45 phút: AI giám sát pin xe"] --> F2["2. AI Destination Dispatch: Gán cuốc tiện đường về trạm"]
+        F2 --> F3{"Xe về bãi đạt pin >= 70%?"}
+        F3 -- "Đủ pin" --> F4["3. Bàn giao và nhận xe ngay (HUMAN ACTION - 3 phút)"]
+        F4 --> F5["4. Bật app đón khách ngay (2 phút)"]
+        F3 -- "Pin dưới 30%" --> F6["Fallback: Hoán đổi xe đã sạc sẵn từ bãi rửa (3 phút)"]
         F6 --> F5
     end
 
-    style C4 fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#c62828
-    style F2 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#1565c0
-    style F4 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#2e7d32
-    style F5 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#2e7d32
-    style F6 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px,stroke-dasharray: 4 4,color:#f57f17
+    style C4 fill:#FFEAEA,stroke:#D32F2F,color:#111
+    style F2 fill:#E8F1FF,stroke:#2F6FED,color:#111
+    style F4 fill:#EAF7EA,stroke:#388E3C,color:#111
+    style F5 fill:#EAF7EA,stroke:#388E3C,color:#111
+    style F6 fill:#FFF8E1,stroke:#FFA000,color:#111
 ```
 
 > **Fallback:** Nếu xe về bãi với pin < 30%, hệ thống tự động kích hoạt quy trình hoán đổi xe (Asset Rotation) cấp ngay một xe dự phòng đã sạc đầy/rửa sạch tại bãi, không để tài xế phải ngồi chờ sạc.
